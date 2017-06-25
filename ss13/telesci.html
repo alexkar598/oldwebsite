@@ -608,12 +608,12 @@ function delBookmark(index)
 <a href="#" onClick="window.close(); return false;">Close</a>
 <div id="calcVis" style="display:block">
 Pad Location X/Y:<br>
-<input type="number" id="padX" onchange="padPosUpdate()" value="166" /> <input type="number" id="padY" onChange="padPosUpdate()" value="108" />
-<p>Possible Offsets: <span id="possibleOffsets">125</span><br>
+<input type="number" id="padX" onchange="padPosUpdate()" /> <input type="number" id="padY" onChange="padPosUpdate()" />
+<p>Possible Offsets: <span id="possibleOffsets">you should not see this</span><br>
 <span class="average" id="accuracy">Not Accurate Yet</span></p>
 <div style="display:block" id="Calibration">
-Bearing: <input type="number" id="calHorAngle" value="0"/><br>
-Elevation: <input type="number" id="calVerAngle" value="45"/><br>
+Bearing: <input type="number" id="calHorAngle"/><br>
+Elevation: <input type="number" id="calVerAngle"/><br>
 Power: <a onclick="power(5)" id="5b" class="linkOn" href="#">5</a>
 <a onclick="power(10)" id="10b" class="" href="#">10</a>
 <a onclick="power(20)" id="20b" class="" href="#">20</a>
@@ -623,7 +623,7 @@ Power: <a onclick="power(5)" id="5b" class="linkOn" href="#">5</a>
 <a onclick="power(50)" id="50b" class="" href="#">50</a>
 <a onclick="power(80)" id="80b" class="" href="#">80</a>
 <a onclick="power(100)" id="100b" class="" href="#">100</a><br>
-Result X/Y: <br> <input type="number" id="calDestX" value="0" /> <input type="number" id="calDestY" value="0" /><br>
+Result X/Y: <br> <input type="number" id="calDestX" /> <input type="number" id="calDestY" /><br>
 <a onclick="addCase()" href="#">Add Case</a> <a onclick="reset()" href="#">Reset calibration</a>
 </div>
 <div style="display:block" id="Use">
