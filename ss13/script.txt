@@ -1,0 +1,500 @@
+//SETUP:
+//add you name to the checkforadmin() function
+
+
+//HOW TO MUTE A SINGLE PERSON ON A SINGLE CHANNEL:
+//to mute people use this syntax: mute_Clown Mc Clowner
+//to unmute a person use this syntax: unmute_Clown Mc Clowner
+//NOTE: muting a person on a channel dose not mute them on all the channels
+
+//HOW TO MUTE A WHOLE CHANNEL:
+//say "kill comms" on any channel to mute it
+//say "restore comms" on any channel to unmute it
+
+//HOW TO BROADCAST:
+//say "/comm first_3_letters_of_the_channel message"
+//like this: /comm sci hello
+//or: /comm eng hi
+//you can also use all
+//like this: /comm all HELLO
+
+
+def implode($vector, $adder) //implodecommand
+{ 
+	$returnString = "";
+	$index = 1;
+
+	while($index <= length($vector))
+	{
+		$at = at($vector, $index);
+		$toAdd = $adder;
+		if($index == 1)
+		{
+			$toAdd = "";
+		}
+		$returnString = $returnString + $toAdd + $at;
+		$index += 1;
+	}
+	return $returnString;
+} 
+
+def makebig() //makes the message in bold
+{
+	content_e = explode($content);
+	big_font = "<font style=font-weight:bold >";
+	big_font_end = "</font>";
+	content = big_font + $content + big_font_end;
+	return content;
+}
+
+def makeverybig() //makes the message VERY big(bwoinkable if abused)
+{
+	content_e = explode($content);
+	big_font = "<font size=20>";
+	big_font_end = "</font>";
+	content = big_font + $content + big_font_end;
+	return content;
+}
+
+def checkforadmin() { //muting power
+	admin = vector("YOUR NAME HERE");
+	if(find(admin,$source)) {
+		return 1;
+	}
+}
+
+def checkforai() { //check for the word ai in message
+	if (find(explode($content," "),"ai")) {
+		return 1;
+	}
+
+	if (find(explode($content," "),"Ai")) {
+		return 1;
+	}
+
+	if (find(explode($content," "),"AI")) {
+		return 1;
+	}
+}
+
+def checkforcommand() { //check for command
+	command = vector("Nanotrasen Representative","Blueshield","Cyborg","AI","Captain","Chief Medical Officer","Research Director","Chief Engineer","Head of Personnel","Head of Security");
+	if (find(command,$job)) {
+		return 1;
+	}
+}
+
+def handlebroadcast() { //broadcast handeler
+	if(checkforcommand()) {
+		if (at(explode($content, " "),1) == "/comm") {
+			$pass = 0;
+			if (at(explode($content, " "),2) == "all") {
+				var = vector(explode($content, " "));
+				cut(var, 0,3);
+				mess = implode(var, " ");
+				broadcast(mess, 1353, $source);
+				broadcast(mess, 1359, $source);
+				broadcast(mess, 1357, $source);
+				broadcast(mess, 1355, $source);
+				broadcast(mess, 1351, $source);
+				broadcast(mess, 1349, $source);
+				broadcast(mess, 1347, $source);
+				broadcast(mess, 1459, $source);
+				broadcast("Message Transmitted", 1353, "Script");
+			}
+			if (at(explode($content, " "),2) == "com") {
+				var = vector(explode($content, " "));
+				cut(var, 0,3);
+				mess = implode(var, " ");
+				broadcast(mess, 1353, $source);
+				broadcast("Message Transmitted", 1353, "Script");
+			}
+			if (at(explode($content, " "),2) == "sec") {
+				var = vector(explode($content, " "));
+				cut(var, 0,3);
+				mess = implode(var, " ");
+				broadcast(mess, 1359, $source);
+				broadcast("Message Transmitted", 1353, "Script");
+			}
+			if (at(explode($content, " "),2) == "eng") {
+				var = vector(explode($content, " "));
+				cut(var, 0,3);
+				mess = implode(var, " ");
+				broadcast(mess, 1357, $source);
+				broadcast("Message Transmitted", 1353, "Script");
+			}
+			if (at(explode($content, " "),2) == "med") {
+				var = vector(explode($content, " "));
+				cut(var, 0,3);
+				mess = implode(var, " ");
+				broadcast(mess, 1355, $source);	
+				broadcast("Message Transmitted", 1353, "Script");	
+			}
+			if (at(explode($content, " "),2) == "sci") {
+				var = vector(explode($content, " "));
+				cut(var, 0,3);
+				mess = implode(var, " ");
+				broadcast(mess, 1351, $source);
+				broadcast("Message Transmitted", 1353, "Script");	
+			}	
+			if (at(explode($content, " "),2) == "ser") {
+				var = vector(explode($content, " "));
+				cut(var, 0,3);
+				mess = implode(var, " ");
+				broadcast(mess, 1349, $source);
+				broadcast("Message Transmitted", 1353, "Script");		
+			}
+			if (at(explode($content, " "),2) == "sup") {
+				var = vector(explode($content, " "));
+				cut(var, 0,3);
+				mess = implode(var, " ");
+				broadcast(mess, 1347, $source);
+				broadcast("Message Transmitted", 1353, "Script");		
+			}
+		}
+	}
+}
+if(checkforadmin()) { //people muting
+	ex = explode($content,"_");
+	if(at(ex,1) == "unmute") {
+		name = at(ex,2);
+		mem(name,"0");
+		broadcast($source + " unmuted " + name, 1353, "Script");
+		$pass = 0;
+	}
+}
+if(checkforadmin()) { //people muting
+	ex = explode($content,"_");
+	if(at(ex,1) == "mute") {
+		name = at(ex,2);
+		mem(name,name);
+		broadcast($source + " muted " + name, 1353, "Script");
+		$pass = 0;
+	}
+}
+
+if($source == mem($source)) {
+	$content = "This person is muted,if you not happy well suck it up";
+}
+
+
+
+
+
+
+
+if(checkforadmin()) {  //channel muting
+	if ($content == "restore comms") {
+		mem("kill",0);
+		$pass = 0;
+	}
+	if ($content == "kill comms") {
+		mem("kill",1);
+		$pass = 0;
+	}
+}
+
+if (mem("kill") == 1) {
+	$pass = 0;
+}
+
+handlebroadcast();
+
+if(checkforai()) {
+	big_text = makebig();
+	broadcast(big_text,134.3,$source,$job); //broadcasts message with the word ai to ai private channel
+}
+
+// AffectedArc07's T-comm script
+underline = 0; // Prefab Variable
+bold = 0; // Prefab Variable
+cardcolor = "ffffff"; // Prefab Variable
+color = "000000"; // Prefab Variable
+def doAsdafagus(theText,from,to) // Defines the function
+{
+    newText = replace(theText, " " + from + "ä", " " + to);
+    newText = replace(newText, "ä" + from + " ", to + " ");
+    newText = replace(newText, " " + from + " ", " " + to + " ");
+    newText = replace(newText, "ä" + from + "ä", to);
+    return newText;
+}
+$content = "ä" + $content + "ä"; // Tidbit
+$content = replace($content, ".", "ä.ä"); // Tidbit
+$content = replace($content, ",", "ä,ä"); // Tidbit
+$content = replace($content, "?", "ä?ä"); // Tidbit
+$content = replace($content, "!", "ä!ä"); // Tidbit
+$content = replace($content, "\"", "ä\"ä"); // Tidbit
+// ALL PIECES BELOW COLOR WORDS (And make some bold)
+$content = doAsdafagus($content, "ai", "<b><u><font color=#FF00FF>AI</font></u></b>");
+$content = doAsdafagus($content, "ai~", "<b><u><font color=#FF00FF>AI~</font></u></b>");
+$content = doAsdafagus($content, "borg", "<u><font color=#FF00FF>Borg</font></u>");
+$content = doAsdafagus($content, "borgs", "<u><font color=#FF00FF>Borgs</font></u>");
+$content = doAsdafagus($content, "borgs~", "<u><font color=#FF00FF>Borgs~</font></u>");
+$content = doAsdafagus($content, "borg~", "<u><font color=#FF00FF>Borg~</font></u>");
+$content = doAsdafagus($content, "borgie", "<u><font color=#FF00FF>Borgie</font></u>");
+$content = doAsdafagus($content, "borgie~", "<u><font color=#FF00FF>Borgie~</font></u>");
+$content = doAsdafagus($content, "cyborg", "<u><font color=#FF00FF>Cyborg</font></u>");
+$content = doAsdafagus($content, "cyborg~", "<u><font color=#FF00FF>Cyborg~</font></u>");
+$content = doAsdafagus($content, "rd", "<b><u><font color=#993399>Research Director</font></u></b>");
+$content = doAsdafagus($content, "rd~", "<b><u><font color=#993399>Research Director~</font></u></b>");
+$content = doAsdafagus($content, "ce", "<b><u><font color=#A66300>Chief Engineer</font></u></b>");
+$content = doAsdafagus($content, "ce~", "<b><u><font color=#A66300>Chief Engineer~</font></u></b>");
+$content = doAsdafagus($content, "hos", "<b><u><font color=#A30000>Head of Security</font></u></b>");
+$content = doAsdafagus($content, "hos~", "<b><u><font color=#A30000>Head of Security~</font></u></b>");
+$content = doAsdafagus($content, "hossy", "<b><u><font color=#A30000>Head of Security</font></u></b>");
+$content = doAsdafagus($content, "hossy~", "<b><u><font color=#A30000>Head of Security~</font></u></b>");
+$content = doAsdafagus($content, "security", "<b><u><font color=#a30000>Security</font></u></b>");
+$content = doAsdafagus($content, "security~", "<b><u><font color=#a30000>Security~</font></u></b>");
+$content = doAsdafagus($content, "head of security", "<b><u><font color=#A30000>Head of Security</font></u></b>");
+$content = doAsdafagus($content, "head of security~", "<b><u><font color=#A30000>Head of Security~</font></u></b>");
+$content = doAsdafagus($content, "brig physician", "<u><font color=#009190>Brig Phys</font><font color=#a30000>ician</font></u>");
+$content = doAsdafagus($content, "brig physician~", "<u><font color=#009190>Brig Phys</font><font color=#a30000>ician~</font></u>");
+$content = doAsdafagus($content, "brig phys", "<u><font color=#a30000>Brig </font><font color=#009190>Phys</font></u>");
+$content = doAsdafagus($content, "brig phys~", "<u><font color=#a30000>Brig </font><font color=#009190>Phys</font></u>");
+$content = doAsdafagus($content, "hop", "<b><u><font color=#204090>Head of Personnel</font></u></b>");
+$content = doAsdafagus($content, "hop~", "<b><u><font color=#204090>Head of Personnel~</font></u></b>");
+$content = doAsdafagus($content, "hoppy", "<b><u><font color=#204090>Head of Personnel</font></u></b>");
+$content = doAsdafagus($content, "hoppy~", "<b><u><font color=#204090>Head of Personnel~</font></u></b>");
+$content = doAsdafagus($content, "head of personnel", "<b><u><font color=#204090>Head of Personnel</font></u></b>");
+$content = doAsdafagus($content, "head of personnel~", "<b><u><font color=#204090>Head of Personnel~</font></u></b>");
+$content = doAsdafagus($content, "ert", "<b><u><font color=#5C5C7C>ERT</font></u></b>");
+$content = doAsdafagus($content, "cmo", "<b><u><font color=#009190>Chief Medical Officer</font></u></b>");
+$content = doAsdafagus($content, "cmo~", "<b><u><font color=#009190>Chief Medical Officer~</font></u></b>");
+$content = doAsdafagus($content, "chief medical officer", "<b><u><font color=#009190>Chief Medical Officer</font></u></b>");
+$content = doAsdafagus($content, "chief medical officer~", "<b><u><font color=#009190>Chief Medical Officer~</font></u></b>");
+$content = doAsdafagus($content, "medical", "<u><font color=#009190>Medical</font></u>");
+$content = doAsdafagus($content, "medical~", "<u><font color=#009190>Medical~</font></u>");
+$content = doAsdafagus($content, "medbay", "<u><font color=#009190>Medbay</font></u>");
+$content = doAsdafagus($content, "medbay~", "<u><font color=#009190>Medbay~</font></u>");
+$content = doAsdafagus($content, "medic", "<u><font color=#009190>Medic</font></u>");
+$content = doAsdafagus($content, "medic~", "<u><font color=#009190>Medic~</font></u>");
+$content = doAsdafagus($content, "paramedic", "<u><font color=#009190>Paramedic</font></u>");
+$content = doAsdafagus($content, "paramedic~", "<u><font color=#009190>Paramedic~</font></u>");
+$content = doAsdafagus($content, "captain", "<b><u><font color=#204090>Captain</font></u></b>");
+$content = doAsdafagus($content, "captain~", "<b><u><font color=#204090>Captain~</font></u></b>");
+$content = doAsdafagus($content, "cappy", "<b><u><font color=#204090>Captain</font></u></b>");
+$content = doAsdafagus($content, "cappy~", "<b><u><font color=#204090>Captain~</font></u></b>");
+$content = doAsdafagus($content, "cap", "<b><u><font color=#204090>Captain</font></u></b>");
+$content = doAsdafagus($content, "genetics", "<u><font color=#009190>Gene</font><font color=#993399>tics</font></u>");
+$content = doAsdafagus($content, "genetics~", "<u><font color=#009190>Gene</font><font color=#993399>tics~</font></u>");
+$content = doAsdafagus($content, "geneticist", "<u><font color=#009190>Genet</font><font color=#993399>icist</font></u>");
+$content = doAsdafagus($content, "geneticist~", "<u><font color=#009190>Genet</font><font color=#993399>icist~</font></u>");
+$content = doAsdafagus($content, "geneticists", "<u><font color=#009190>Genet</font><font color=#993399>icists</font></u>");
+$content = doAsdafagus($content, "geneticists~", "<u><font color=#009190>Genet</font><font color=#993399>icists~</font></u>");
+$content = doAsdafagus($content, "blueshield", "<b><u><font color=#204090>Blueshield</font></u></b>");
+$content = doAsdafagus($content, "blueshield~", "<b><u><font color=#204090>Blueshield~</font></u></b>");
+$content = doAsdafagus($content, "condom", "<b><u><font color=#204090>Condom</font></u></b>");
+$content = doAsdafagus($content, "condom~", "<b><u><font color=#204090>Condom~</font></u></b>");
+$content = doAsdafagus($content, "cargo", "<u><font color=#7F6539>Cargo</font></u>");
+$content = doAsdafagus($content, "cargo~", "<u><font color=#7F6539>Cargo~</font></u>");
+$content = doAsdafagus($content, "qm", "<b><u><font color=#7F6539>Quartermaster</font></u></b>");
+$content = doAsdafagus($content, "qm~", "<b><u><font color=#7F6539>Quartermaster~</font></u></b>");
+$content = doAsdafagus($content, "Quartermaster~", "<b><u><font color=#7F6539>Quartermaster~</font></u></b>");
+$content = doAsdafagus($content, "Quartermaster", "<b><u><font color=#7F6539>Quartermaster</font></u></b>");
+$content = doAsdafagus($content, "science", "<u><font color=#993399>Science</font></u>");
+$content = doAsdafagus($content, "science~", "<u><font color=#993399>Science~</font></u>");
+$content = doAsdafagus($content, "scientist", "<u><font color=#993399>Scientist</font></u>");
+$content = doAsdafagus($content, "R&D", "<u><font color=#993399>Research and Development</font></u>");
+$content = doAsdafagus($content, "R&D~", "<u><font color=#993399>Research and Development~</font></u>");
+$content = doAsdafagus($content, "Robotics", "<u><font color=#993399>Robotics</font></u>");
+$content = doAsdafagus($content, "Robotics~", "<u><font color=#993399>Robotics~</font></u>");
+$content = doAsdafagus($content, "Roboticist", "<u><font color=#993399>Roboticist</font></u>");
+$content = doAsdafagus($content, "bridge", "<u><font color=#204090>Bridge</font></u>");
+$content = doAsdafagus($content, "bridge~", "<u><font color=#204090>Bridge~</font></u>");
+$content = doAsdafagus($content, "brig", "<u><font color=#A30000>Brig</font></u>");
+$content = doAsdafagus($content, "brig~", "<u><font color=#A30000>Brig~</font></u>");
+$content = doAsdafagus($content, "armory", "<u><font color=#A30000>Armory</font></u>");
+$content = doAsdafagus($content, "armory~", "<u><font color=#A30000>Armory~</font></u>");
+$content = doAsdafagus($content, "Engineering", "<u><font color=#A66300>Engineering</font></u>");
+$content = doAsdafagus($content, "Engineering~", "<u><font color=#A66300>Engineering~</font></u>");
+$content = doAsdafagus($content, "atmos", "<u><font color=#A66300>Atmospherics</font></u>");
+$content = doAsdafagus($content, "atmos~", "<u><font color=#A66300>Atmospherics~</font></u>");
+$content = doAsdafagus($content, "atmospherics", "<u><font color=#A66300>Atmospherics</font></u>");
+$content = doAsdafagus($content, "atmospherics~", "<u><font color=#A66300>Atmospherics~</font></u>");
+$content = doAsdafagus($content, "mechanics", "<u><font color=#A66300>Mechanics Workshop</font></u>");
+$content = doAsdafagus($content, "mechanics~", "<u><font color=#A66300>Mechanics Workshops~</font></u>");
+$content = doAsdafagus($content, "experimentor", "<u><font color=#993399>Experimentor</font></u>");
+$content = doAsdafagus($content, "experimentor~", "<u><font color=#993399>Experimentor~</font></u>");
+$content = doAsdafagus($content, "mining", "<u><font color=#7F6539>Mining</font></u>");
+$content = doAsdafagus($content, "mining~", "<u><font color=#7F6539>Mining~</font></u>");
+$content = doAsdafagus($content, "med maint", "<b><u><font color=#009190>Medical Maintenance</font></u></b>");
+$content = doAsdafagus($content, "med maintenance", "<b><u><font color=#009190>Medical Maintenance</font></u></b>");
+$content = doAsdafagus($content, "medical maintenance", "<b><u><font color=#009190>Medical Maintenance</font></u></b>");
+$content = doAsdafagus($content, "sci maint", "<b><u><font color=#993399>Science Maintenance</font></u></b>");
+$content = doAsdafagus($content, "sci maintenance", "<b><u><font color=#993399>Science Maintenance</font></u></b>");
+$content = doAsdafagus($content, "science maintenance", "<b><u><font color=#993399>Science Maintenance</font></u></b>");
+$content = doAsdafagus($content, "chap maint", "<b><u><font color=#80A000>Chapel Maintenance</font></u></b>");
+$content = doAsdafagus($content, "chapel maint", "<b><u><font color=#80A000>Chapel Maintenance</font></u></b>");
+$content = doAsdafagus($content, "chap maintenance", "<b><u><font color=#80A000>Chapel Maintenance</font></u></b>");
+$content = doAsdafagus($content, "chapel maintenance", "<b><u><font color=#80A000>Chapel Maintenance</font></u></b>");
+$content = doAsdafagus($content, "bar maint", "<b><u><font color=#80A000>Bar Maintenance</font></u></b>");
+$content = doAsdafagus($content, "bar maintenance", "<b><u><font color=#80A000>Bar Maintenance</font></u></b>");
+$content = doAsdafagus($content, "botany maint", "<b><u><font color=#80A000>Botany Maintenance</font></u></b>");
+$content = doAsdafagus($content, "bot maintenance", "<b><u><font color=#80A000>Botany Maintenance</font></u></b>");
+$content = doAsdafagus($content, "bot maint", "<b><u><font color=#80A000>Botany Maintenance</font></u></b>");
+$content = doAsdafagus($content, "botany maintenance", "<b><u><font color=#80A000>Botany Maintenance</font></u></b>");
+$content = doAsdafagus($content, "arrivals maint", "<b><u>Arrivals Maintenance</u></b>");
+$content = doAsdafagus($content, "arrivals maintenance", "<b><u>Arrivals Maintenance</u></b>");
+$content = doAsdafagus($content, "north arrivals maint", "<b><u>>North Arrivals Maintenance</u></b>");
+$content = doAsdafagus($content, "north arrivals maintenance", "<b><u>North Arrivals Maintenance</u></b>");
+$content = doAsdafagus($content, "Disposals", "<b><u><font color=#7F6539>Disposals</font></u></b>");
+$content = doAsdafagus($content, "Disposals maint", "<b><u><font color=#7F6539>Disposals Maintenance</font></u></b>");
+$content = doAsdafagus($content, "Disposals maintenance", "<b><u><font color=#7F6539>Disposals Maintenance</font></u></b>");
+$content = doAsdafagus($content, "locker room maint", "<b><u><font color=#7F6539>Locker Room Maintenance</font></u></b>");
+$content = doAsdafagus($content, "locker room maint", "<b><u><font color=#7F6539>Locker Room Maintenance</font></u></b>");
+$content = doAsdafagus($content, "Cargo maint", "<b><u><font color=#7F6539>Cargo Maintenance</font></u></b>");
+$content = doAsdafagus($content, "Cargo maintenance", "<b><u><font color=#7F6539>Cargo Maintenance</font></u></b>");
+$content = doAsdafagus($content, "mining maint", "<b><u><font color=#7F6539>Mining Maintenance</font></u></b>");
+$content = doAsdafagus($content, "mining maintenance", "<b><u><font color=#7F6539>Mining Maintenance</font></u></b>");
+$content = doAsdafagus($content, "engi maint", "<b><u><font color=#A66300>Engineering Maintenance</font></u></b>");
+$content = doAsdafagus($content, "engi maintenance", "<b><u><font color=#A66300>Engineering Maintenance</font></u></b>");
+$content = doAsdafagus($content, "engineering maint", "<b><u><font color=#A66300>Engineering Maintenance</font></u></b>");
+$content = doAsdafagus($content, "engineering maintenance", "<b><u><font color=#A66300>Engineering Maintenance</font></u></b>");
+$content = doAsdafagus($content, "help", "<b><u><font color=#ba2200>Help</font></u></b>");
+$content = doAsdafagus($content, "help!", "<b><u><font color=#ba2200>Help!</font></u></b>");
+$content = doAsdafagus($content, "arrivals", "<b><u>Arrivals</u></b>");
+$content = replace($content, "ä", "");
+$securityRadio = vector("Internal Affairs Agent", "Lawyer", "Public Defender", "Head of Security", "Warden", "Detective", "Magistrate", "Forensic Technician", "Security Officer", "Brig Physician", "Security Pod Pilot"); // All Security Jobs
+$medicalRadio = vector("Chief Medical Officer", "Medical Doctor", "Surgeon", "Nurse", "Coroner", "Chemist", "Pharmacist", "Pharmacologist", "Virologist", "Pathologist", "Microbiologist", "Psychiatrist", "Psychologist", "Therapist", "Paramedic"); // All Medical Jobs
+$scienceRadio = vector("Research Director", "Geneticist", "Scientist", "Xenoarcheologist", "Anomalist", "Plasma Researcher", "Xenobiologist", "Chemical Researcher", "Roboticist", "Biomechanical Engineer", "Mechatronic Engineer"); // All Science Jobs
+$engineeringRadio = vector("Chief Engineer", "Station Engineer", "Maintenance Technician", "Engine Technician", "Electrician", "Life Support Specialist", "Atmospheric Technician", "Mechanic"); // All Engineering Jobs
+$supplyRadio = vector("Quartermaster", "Cargo Technician", "Shaft Miner", "Spelunker"); // All Supply Jobs
+$supportRadio = vector("Bartender", "Chef", "Cook", "Culinary Artist", "Butcher", "Botanist", "Hydroponicist", "Botanical Researcher", "Clown", "Mime", "Janitor", "Custodial Technician", "Librarian", "Journalist", "Barber", "Hair Stylist", "Beautician", "Chaplain"); // All Service/Support Jobs
+$civilianRadio = vector("Civilian", "Tourist", "Businessman", "Trader", "Assistant"); // All Varients of Civilian
+$siliconRadio = vector("AI", "Cyborg", "Android", "Robot"); // All Silicon Jobs
+$ERTRadio = vector("Emergency Response Team Officer", "Emergency Response Team Engineer", "Emergency Response Team Medic", "Emergency Response Team Leader", "Emergency Response Team Member"); // All ERT Jobs
+$Names = vector("DTX", "Ikiyatiki"); // Characters I use because snowflake
+if(find($medicalRadio, $job)){ // Medical Radio
+color = "009190";
+}
+if(find($scienceRadio, $job)){ // Science Radio
+color = "993399";
+}
+if(find($siliconRadio, $job)){ // Silicon Radio
+color = "FF00FF";
+$source = "<code>" + $source + "</code>";
+$content = "<code>" + $content + "</code>";
+}
+if(find($supportRadio, $job)){ // Service / Support Radio
+color = "80A000";
+}
+if(find($securityRadio, $job)){ // Security Radio
+color = "A30000";
+}
+if(find($engineeringRadio, $job)){ // Engineering Radio
+color = "A66300";
+}
+if(find($supplyRadio, $job)){ // Supply Radio
+color = "7F6539";
+}
+if(find($ERTRadio, $job)){ // ERT Radio
+color = "5C5C7C";
+bold = 1;
+$content = "<b>" + $content + "</b>";
+$job = "ERT";
+}
+if ($job == "No id"){ // No ID
+$job = "No ID Detected";
+}
+if($job == "Blueshield"){ // Blueshield
+color = "204090";
+bold = 1;
+$content = "<b>" + $content + "</b>";
+}
+if($job == "Nanotrasen Representative"){ // NT Rep
+color = "204090";
+$job = "NT Rep";
+bold = 1;
+$content = "<b>" + $content + "</b>";
+}
+if($job == "Chief Medical Officer"){ // CMO
+bold = 1;
+$content = "<b>" + $content + "</b>";
+$job = "CMO";
+}
+if($job == "Quartermaster"){ // QM
+$job = "QM";
+}
+if($job == "Chief Engineer"){ // CE
+bold = 1;
+$content = "<b>" + $content + "</b>";
+$job = "CE";
+}
+if($job == "Captain"){ // Captain
+color = "204090";
+bold = 1;
+$content = "<b>" + $content + "</b>";
+}
+if($job == "Head of Personnel"){ // HoP
+bold = 1;
+$content = "<b>" + $content + "</b>";
+color = "204090";
+$job = "HoP";
+}
+if($job == "Head of Security"){ // HoS
+bold = 1;
+$content = "<b>" + $content + "</b>";
+$job = "HoS";
+}
+if($job == "Research Director"){ // RD
+bold = 1;
+$content = "<b>" + $content + "</b>";
+$job = "RD";
+}
+if($source == "Poly"){ // Mutes Poly
+$pass = 0;
+}
+if(find($Names, $source)){ // Script creator color 
+color = "4286f4";
+alt = "Script Creator";
+}
+workspace = "<span title=\"" + alt + "\" style=\"background-color: #" + cardcolor + "; font-size: 9px; border: 1px #1f1f1f solid\"> "; // Makes the tag before the name
+if (underline){
+workspace += "<u>";
+}
+if (bold){
+workspace += "<b>";
+}
+if (color){
+workspace += "<span style=\"color: #" + color + ";\">";
+}
+workspace += $job;
+if (color){
+workspace += "</span>";
+}
+if (bold){
+workspace += "</b>";
+}
+if (underline){
+workspace += "</u>";
+}
+workspace += " </span>";
+$source = workspace + " " + $source; // Adds tag to source
+if(checkforcommand()) {
+	$content = makebig(); //puts message from command folks in bold
+}
+if(checkforcommand()) {
+	$content = makebig(); //puts message from command folks in bold
+}
+
+//SETUP:
+//add you name to the checkforadmin() function
+
+
+//HOW TO MUTE A SINGLE PERSON ON A SINGLE CHANNEL:
+//to mute people use this syntax: mute_Clown Mc Clowner
+//to unmute a person use this syntax: unmute_Clown Mc Clowner
+//NOTE: muting a person on a channel dose not mute them on all the channels
+
+//HOW TO MUTE A WHOLE CHANNEL:
+//say "kill comms" on any channel to mute it
+//say "restore comms" on any channel to unmute it
+
+//HOW TO BROADCAST:
+//say "/comm first_3_letters_of_the_channel message"
+//like this: /comm sci hello
+//or: /comm eng hi
+//you can also use all
+//like this: /comm all HELLO
+
+
