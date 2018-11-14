@@ -265,11 +265,11 @@
     destroy: function() {
       clearInterval(this.intervalID);
       for (var i = 0; i < this.zerglings.length; ++i) {
-        this.zerglings[i].dom.remove();
+  //      this.zerglings[i].dom.remove();
       }
       for (var i = 0; i < this.targets.length; ++i) {
-        this.targets[i].dom.css(this.targets[i].initialCSS);
-        this.targets[i].dom.removeData(Zergling.DATA_KEY);
+   //     this.targets[i].dom.css(this.targets[i].initialCSS);
+   //     this.targets[i].dom.removeData(Zergling.DATA_KEY);
       }
     },
     registerTarget: function(target) {
