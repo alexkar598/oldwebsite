@@ -33,7 +33,7 @@
       height: this.height,
       position: 'absolute',
       display: 'block',
-      background-image: 'url("https://i.imgur.com/eSOOS4x.gif")',
+      background&minus;image: 'url("https://i.imgur.com/eSOOS4x.gif")',
       left: x,
       top: y,
       borderRadius: '5px',
