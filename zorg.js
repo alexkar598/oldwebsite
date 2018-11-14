@@ -20,8 +20,8 @@
     this.x = x;
     this.y = y;
 
-    this.width = 10;
-    this.height = 10;
+    this.width = 15;
+    this.height = 15;
 
     this.isKilling = false;
     this.isFinished = false;
