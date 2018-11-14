@@ -123,7 +123,7 @@
         } else {
           this.isFinished = true;
           this.dom.fadeOut(100, function() {
-            $(this).remove();
+  //          $(this).remove();
           });
           return;
         }
