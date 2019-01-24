@@ -103,12 +103,12 @@
         if (target.life > 0) {
           // It's still alive! Pulsate and continue to kill:
           target.life--;
-          this.pulsate();
+//          this.pulsate();
           target.dom.css('opacity', target.life / Zergling.LIFE);
         } else {
           // It's DEAD! 
           target.dom.css('visibility', 'hidden');
-          this.pulsate(0);
+//          this.pulsate(0);
           this.isKilling = false;
           this.target = null;
         }
