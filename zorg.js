@@ -37,7 +37,7 @@
 //      'background-image': 'url("https://i.imgur.com/eSOOS4x.gif")',
       left: x,
       top: y,
-      borderRadius: '5px',
+//      borderRadius: '5px',
       zIndex: 9999
     }).appendTo(body);
 
